@@ -1,11 +1,8 @@
 package zxf.java.threadpool;
 
-import com.google.common.util.concurrent.Futures;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public class ExecutorServiceTests {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
