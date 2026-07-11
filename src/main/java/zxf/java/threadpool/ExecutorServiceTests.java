@@ -20,22 +20,22 @@ public class ExecutorServiceTests {
         });
         System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().submit().future, " + submitFuture.get());
 
-        List<Callable<String>> callbacks = Arrays.asList(() -> {
-            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callback1()");
+        List<Callable<String>> callables = Arrays.asList(() -> {
+            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callable1()");
             Thread.sleep(1000);
-            return "callback-1";
+            return "callable-1";
         }, () -> {
-            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callback1()");
+            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callable2()");
             Thread.sleep(2000);
-            return "callback-2";
+            return "callable-2";
         }, () -> {
-            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callback1()");
+            System.out.println(Thread.currentThread() + "  ExecutorServiceTests.main().executorService().callable3()");
             Thread.sleep(3000);
-            return "callback-3";
+            return "callable-3";
         });
 
-        String invokeAny = executorService.invokeAny(callbacks);
-        List<Future<String>> futures = executorService.invokeAll(callbacks);
+        String invokeAny = executorService.invokeAny(callables);
+        List<Future<String>> futures = executorService.invokeAll(callables);
 
         executorService.shutdown();
         try {
