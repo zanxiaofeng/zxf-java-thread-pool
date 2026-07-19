@@ -47,10 +47,6 @@ public final class ThreadPoolUtils {
      */
     public static ThreadFactory namedThreadFactory(String prefix) {
         AtomicInteger counter = new AtomicInteger(0);
-        return r -> {
-            Thread t = new Thread(r, prefix + "-" + counter.incrementAndGet());
-            t.setDaemon(false);
-            return t;
-        };
+        return r -> new Thread(r, prefix + "-" + counter.incrementAndGet());
     }
 }

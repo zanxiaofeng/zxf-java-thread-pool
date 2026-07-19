@@ -30,7 +30,7 @@ public class ThreadPoolMonitorHookTests {
         @Override
         protected void beforeExecute(Thread t, Runnable r) {
             startTime.set(System.nanoTime());
-            System.out.println("  [beforeExecute] " + t.getName() + " 开始任务, 累计提交=" + totalTasks.incrementAndGet());
+            System.out.println("  [beforeExecute] " + t.getName() + " 开始任务, 累计开始执行=" + totalTasks.incrementAndGet());
         }
 
         @Override
@@ -55,6 +55,10 @@ public class ThreadPoolMonitorHookTests {
             final int idx = i;
             pool.execute(() -> ThreadPoolUtils.sleep(200 * idx));
         }
+        // 抛异常任务：演示 afterExecute 的 throwable 参数（仅 execute 路径会透传异常，
+        // submit 的异常会被封装进 Future，afterExecute 中 throwable 为 null）。
+        // 异常随后还会传播到线程的 UncaughtExceptionHandler，默认打印堆栈到 stderr。
+        pool.execute(() -> { throw new RuntimeException("demo-boom"); });
 
         ThreadPoolUtils.shutdown(pool);
     }

@@ -2,7 +2,6 @@ package zxf.java.threadpool;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolExecutorTests {
     public static void main(String[] args) {
@@ -25,8 +24,8 @@ public class ThreadPoolExecutorTests {
         System.out.println(Thread.currentThread() + " ThreadPoolExecutorTests.main().cachedExecutor() PoolSize: " + cachedExecutor.getPoolSize());
         System.out.println(Thread.currentThread() + " ThreadPoolExecutorTests.main().cachedExecutor() QueueSize: " + cachedExecutor.getQueue().size());
 
-        shutdown(fixedExecutor);
-        shutdown(cachedExecutor);
+        ThreadPoolUtils.shutdown(fixedExecutor);
+        ThreadPoolUtils.shutdown(cachedExecutor);
     }
 
     /** 休眠后打印消息；中断时恢复中断状态并提前返回，避免异常被 submit 静默吞掉。 */
@@ -38,17 +37,5 @@ public class ThreadPoolExecutorTests {
             return;
         }
         System.out.println(Thread.currentThread() + " " + message);
-    }
-
-    private static void shutdown(ThreadPoolExecutor executor) {
-        executor.shutdown();
-        try {
-            if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
     }
 }

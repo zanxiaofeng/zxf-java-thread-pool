@@ -43,7 +43,7 @@ public class VirtualThreadTests {
 
         System.out.println("\n===== 结论 =====");
         System.out.println("平台线程池  : " + platformMs + " ms, 峰值 OS 线程数 ≈ " + platformPeak);
-        System.out.println("虚拟线程池  : " + virtualMs + " ms, 峰值虚拟线程数 ≈ " + TASK_COUNT + "（轻量，不占 OS 线程）");
+        System.out.println("虚拟线程    : " + virtualMs + " ms, 峰值虚拟线程数 ≈ " + TASK_COUNT + "（每任务一线程，轻量不占 OS 线程）");
     }
 
     /** 提交 taskCount 个短任务，全部完成（通过 CountDownLatch 等待）后返回耗时（毫秒）。 */
