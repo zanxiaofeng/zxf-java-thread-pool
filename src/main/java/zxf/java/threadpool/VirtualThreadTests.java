@@ -1,11 +1,11 @@
 package zxf.java.threadpool;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * JDK 21 虚拟线程（Virtual Thread, JEP 444）演示。
@@ -51,10 +51,9 @@ public class VirtualThreadTests {
         CountDownLatch latch = new CountDownLatch(TASK_COUNT);
         long start = System.nanoTime();
         for (int i = 0; i < TASK_COUNT; i++) {
-            executor.submit(() -> {
+            executor.execute(() -> { // 无需返回结果，execute 避免每次提交额外分配 FutureTask
                 ThreadPoolUtils.sleep(10); // 模拟 IO 等待
                 latch.countDown();
-                return null;
             });
         }
         latch.await();

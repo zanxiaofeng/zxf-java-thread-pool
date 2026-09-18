@@ -46,7 +46,7 @@ public final class ThreadPoolUtils {
      * 创建带命名前缀的线程工厂，便于从线程名识别任务来源（如 demo-thread-1）。
      */
     public static ThreadFactory namedThreadFactory(String prefix) {
-        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger counter = new AtomicInteger();
         return r -> new Thread(r, prefix + "-" + counter.incrementAndGet());
     }
 }
